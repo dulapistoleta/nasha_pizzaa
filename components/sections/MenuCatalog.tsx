@@ -39,7 +39,7 @@ export const MenuCatalog = memo(function MenuCatalog({
   const filteredDishes = isFiltered ? (BY_CATEGORY.get(filter as DishCategory) ?? []) : [];
 
   return (
-    <section id="menu-catalog" className="relative scroll-mt-40 pb-16 pt-4 sm:pb-24">
+    <section id="menu-catalog" className="relative scroll-mt-40 pb-12 pt-3 sm:pb-24 sm:pt-4">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Всё меню заведения"
@@ -50,7 +50,7 @@ export const MenuCatalog = memo(function MenuCatalog({
 
         {/* Панель управления фильтром. Смена состояния — CSS-анимация
             по key: React пересоздаёт узел, и она проигрывается заново. */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-6 sm:gap-3">
           {isFiltered ? (
               <div key={`filtered-${filter}`} className="animate-fade-down flex flex-wrap items-center gap-3">
                 <span className="inline-flex items-center gap-2 rounded-2xl bg-sun px-4 py-2.5 text-sm font-extrabold text-graphite">
@@ -81,7 +81,7 @@ export const MenuCatalog = memo(function MenuCatalog({
         </div>
 
         {isFiltered ? (
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-8 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {filteredDishes.map((dish, index) => (
               <div
                 /* Ключ — только id блюда. Раньше в ключ входил фильтр, поэтому
@@ -97,16 +97,16 @@ export const MenuCatalog = memo(function MenuCatalog({
             ))}
           </div>
         ) : (
-          <div className="mt-10 flex flex-col gap-14">
+          <div className="mt-6 flex flex-col gap-8 sm:mt-10 sm:gap-14">
             {MENU_CATEGORIES.map((category) => {
               const dishes = BY_CATEGORY.get(category.id as DishCategory) ?? [];
               if (dishes.length === 0) return null;
 
               return (
                 <div key={category.id} id={`cat-${category.id}`} className="scroll-mt-44">
-                  <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-graphite/10 pb-4">
-                    <h3 className="flex items-center gap-3 text-2xl font-black text-graphite sm:text-3xl">
-                      <span className="grid h-10 w-10 place-items-center rounded-2xl bg-cream text-xl shadow-inset-line ring-1 ring-graphite/10">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-graphite/10 pb-2.5 sm:gap-3 sm:pb-4">
+                    <h3 className="flex items-center gap-2 text-lg font-black text-graphite sm:gap-3 sm:text-3xl">
+                      <span className="grid h-8 w-8 place-items-center rounded-xl bg-cream text-base shadow-inset-line ring-1 ring-graphite/10 sm:h-10 sm:w-10 sm:rounded-2xl sm:text-xl">
                         {category.emoji}
                       </span>
                       {category.label}
@@ -116,7 +116,7 @@ export const MenuCatalog = memo(function MenuCatalog({
                     </span>
                   </div>
 
-                  <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-6 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
                     {dishes.map((dish, index) => (
                       <Reveal
                         key={dish.id}

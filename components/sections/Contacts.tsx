@@ -55,7 +55,7 @@ const CHANNELS = [
 export function Contacts() {
 
   return (
-    <section id="contacts" className="skip-offscreen relative scroll-mt-40 pb-16 pt-6 sm:pb-24">
+    <section id="contacts" className="skip-offscreen relative scroll-mt-40 pb-12 pt-4 sm:pb-24 sm:pt-6">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Как нас найти и заказать"

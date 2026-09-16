@@ -40,9 +40,9 @@ const STATS = [
 export function Atmosphere() {
 
   return (
-    <section id="atmosphere" className="skip-offscreen relative scroll-mt-40 py-14 sm:py-20">
+    <section id="atmosphere" className="skip-offscreen relative scroll-mt-40 py-8 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
+        <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
           {/* Панно */}
           <Reveal className="relative order-2 lg:order-1">
             <SimmerSmoke className="-top-6 left-10" />

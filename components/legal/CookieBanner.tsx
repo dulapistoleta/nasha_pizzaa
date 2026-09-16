@@ -6,13 +6,13 @@ import { useState } from "react";
 import { useConsent } from "@/lib/consent";
 
 /**
- * Баннер согласия на работу с данными в браузере.
+ * Компактный тост согласия на работу с данными в браузере.
  *
  * Принципы, чтобы это не стало «тёмным паттерном»:
- *  • три кнопки одного размера и веса — отказ не спрятан и не серый;
+ *  • «Принять» и «Отклонить» — одинаковые по размеру и весу кнопки;
  *  • необязательные категории по умолчанию выключены;
- *  • выбор можно изменить в любой момент — ссылка «Настройки cookie» в подвале;
- *  • закрытие крестиком = согласие только на необходимое.
+ *  • выбор можно изменить в любой момент — «Настройки cookie» в подвале;
+ *  • крестик равен отказу от необязательного.
  */
 export function CookieBanner() {
   const { isBannerOpen, consent, save, closeBanner } = useConsent();
@@ -28,27 +28,32 @@ export function CookieBanner() {
     setSettingsOpen(true);
   };
 
+  const rowClass =
+    "flex-1 rounded-xl px-2.5 py-2 text-[0.7rem] font-extrabold transition whitespace-nowrap";
+
   return (
     <div
       role="dialog"
       aria-labelledby="cookie-banner-title"
       aria-describedby="cookie-banner-text"
-      className="fixed inset-x-3 bottom-[5.5rem] z-[80] lg:inset-x-auto lg:right-6 lg:bottom-6 lg:max-w-md"
+      className="fixed inset-x-3 bottom-3 z-[80] sm:inset-x-auto sm:right-4 sm:bottom-4 sm:max-w-sm"
     >
-      <div className="rounded-3xl border border-graphite/10 bg-cream p-5 shadow-float">
-        <div className="flex items-start gap-3">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-2xl bg-sun text-graphite">
-            <Cookie className="h-4.5 w-4.5" strokeWidth={2.6} />
+      <div className="rounded-2xl border border-graphite/10 bg-cream p-3 shadow-float">
+        <div className="flex items-start gap-2.5">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-xl bg-sun text-graphite">
+            <Cookie className="h-3.5 w-3.5" strokeWidth={2.6} />
           </span>
-          <div className="flex flex-col gap-1">
-            <h2 id="cookie-banner-title" className="font-display text-base font-black text-graphite">
+          <div className="flex min-w-0 flex-col gap-0.5">
+            <h2 id="cookie-banner-title" className="text-xs font-bold text-graphite">
               Данные в вашем браузере
             </h2>
-            <p id="cookie-banner-text" className="text-xs leading-relaxed text-ink-50">
-              Для работы корзины сайт хранит данные в браузере — это необходимо. Рекламных
-              трекеров и аналитики у нас нет. Подробнее — в{" "}
-              <Link href="/cookies" className="font-semibold text-graphite underline underline-offset-2">
-                политике Cookie
+            <p id="cookie-banner-text" className="text-[0.7rem] leading-snug text-ink-50">
+              Храним только корзину и ваш выбор. Рекламных трекеров и аналитики нет —{" "}
+              <Link
+                href="/cookies"
+                className="font-semibold text-graphite underline underline-offset-2"
+              >
+                подробнее
               </Link>
               .
             </p>
@@ -57,84 +62,84 @@ export function CookieBanner() {
             type="button"
             onClick={() => save({ analytics: false, marketing: false })}
             aria-label="Закрыть и оставить только необходимое"
-            className="ml-auto grid h-8 w-8 shrink-0 place-items-center rounded-full text-ink-30 transition hover:bg-milk hover:text-graphite"
+            className="ml-auto grid h-6 w-6 shrink-0 place-items-center rounded-full text-ink-30 transition hover:bg-milk hover:text-graphite"
           >
-            <X className="h-4 w-4" strokeWidth={2.6} />
+            <X className="h-3.5 w-3.5" strokeWidth={2.6} />
           </button>
         </div>
 
         {isSettingsOpen ? (
-          <div className="mt-4 flex flex-col gap-2 rounded-2xl border border-line bg-white p-3">
+          <div className="mt-2.5 flex flex-col gap-1.5 rounded-xl border border-line bg-white p-2.5">
             <label className="flex items-start justify-between gap-3 opacity-70">
               <span className="flex flex-col gap-0.5">
-                <span className="text-xs font-bold text-graphite">Необходимые</span>
-                <span className="text-[0.7rem] leading-snug text-ink-50">
-                  Корзина и запоминание вашего выбора. Отключить нельзя.
+                <span className="text-[0.7rem] font-bold text-graphite">Необходимые</span>
+                <span className="text-[0.65rem] leading-snug text-ink-50">
+                  Корзина и запоминание выбора. Отключить нельзя.
                 </span>
               </span>
-              <input type="checkbox" checked disabled className="mt-1 h-4 w-4 accent-graphite" />
+              <input type="checkbox" checked disabled className="mt-0.5 h-3.5 w-3.5 accent-graphite" />
             </label>
 
             <label className="flex items-start justify-between gap-3">
               <span className="flex flex-col gap-0.5">
-                <span className="text-xs font-bold text-graphite">Аналитика</span>
-                <span className="text-[0.7rem] leading-snug text-ink-50">
-                  Пока не используется. Если включим — только с вашего согласия.
+                <span className="text-[0.7rem] font-bold text-graphite">Аналитика</span>
+                <span className="text-[0.65rem] leading-snug text-ink-50">
+                  Пока не используется — включим только с вашего согласия.
                 </span>
               </span>
               <input
                 type="checkbox"
                 checked={analytics}
                 onChange={(event) => setAnalytics(event.target.checked)}
-                className="mt-1 h-4 w-4 accent-graphite"
+                className="mt-0.5 h-3.5 w-3.5 accent-graphite"
               />
             </label>
 
             <label className="flex items-start justify-between gap-3">
               <span className="flex flex-col gap-0.5">
-                <span className="text-xs font-bold text-graphite">Маркетинг</span>
-                <span className="text-[0.7rem] leading-snug text-ink-50">
-                  Пока не используется. Рекламных пикселей на сайте нет.
+                <span className="text-[0.7rem] font-bold text-graphite">Маркетинг</span>
+                <span className="text-[0.65rem] leading-snug text-ink-50">
+                  Рекламных пикселей на сайте нет.
                 </span>
               </span>
               <input
                 type="checkbox"
                 checked={marketing}
                 onChange={(event) => setMarketing(event.target.checked)}
-                className="mt-1 h-4 w-4 accent-graphite"
+                className="mt-0.5 h-3.5 w-3.5 accent-graphite"
               />
             </label>
           </div>
         ) : null}
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-2.5 flex items-center gap-2">
           <button
             type="button"
             onClick={() => save({ analytics: true, marketing: true })}
-            className="flex-1 rounded-2xl bg-sun px-4 py-2.5 text-xs font-extrabold text-graphite transition hover:bg-sun-deep"
+            className={`${rowClass} bg-sun text-graphite hover:bg-sun-deep`}
           >
-            Принять все
+            Принять
           </button>
           <button
             type="button"
             onClick={() => save({ analytics: false, marketing: false })}
-            className="flex-1 rounded-2xl border border-graphite/15 bg-white px-4 py-2.5 text-xs font-extrabold text-graphite transition hover:border-graphite/30 hover:bg-milk"
+            className={`${rowClass} border border-graphite/15 bg-white text-graphite hover:border-graphite/30 hover:bg-milk`}
           >
-            Только необходимые
+            Отклонить
           </button>
           {isSettingsOpen ? (
             <button
               type="button"
               onClick={() => save({ analytics, marketing })}
-              className="flex-1 rounded-2xl bg-graphite px-4 py-2.5 text-xs font-extrabold text-cream transition hover:bg-graphite-soft"
+              className={`${rowClass} bg-graphite text-cream hover:bg-graphite-soft`}
             >
-              Сохранить выбор
+              Сохранить
             </button>
           ) : (
             <button
               type="button"
               onClick={openSettings}
-              className="flex-1 rounded-2xl border border-graphite/15 bg-white px-4 py-2.5 text-xs font-extrabold text-graphite transition hover:border-graphite/30 hover:bg-milk"
+              className={`${rowClass} border border-graphite/15 bg-white text-graphite hover:border-graphite/30 hover:bg-milk`}
             >
               Настроить
             </button>
@@ -145,7 +150,7 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={closeBanner}
-            className="mt-3 text-[0.7rem] font-semibold text-ink-50 underline underline-offset-2 transition hover:text-graphite"
+            className="mt-2 text-[0.65rem] font-semibold text-ink-50 underline underline-offset-2 transition hover:text-graphite"
           >
             Вернуться назад
           </button>

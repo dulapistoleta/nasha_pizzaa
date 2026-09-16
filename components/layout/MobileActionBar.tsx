@@ -3,6 +3,7 @@
 import { Phone, UtensilsCrossed } from "lucide-react";
 import { CartButton } from "@/components/cart/CartButton";
 import { useCart } from "@/lib/cart-store";
+import { useConsent } from "@/lib/consent";
 import { useScrolledPast } from "@/hooks/useMediaQuery";
 import { telHref } from "@/lib/format";
 import { RESTAURANT } from "@/lib/restaurant";
@@ -14,9 +15,11 @@ import { RESTAURANT } from "@/lib/restaurant";
 export function MobileActionBar() {
   const visible = useScrolledPast(420);
   const { totals, isOpen, close } = useCart();
+  const { isBannerOpen } = useConsent();
   const hasItems = totals.count > 0;
 
-  const shown = visible && !isOpen;
+  /* Пока открыт тост согласия, панель уступает ему место внизу экрана. */
+  const shown = visible && !isOpen && !isBannerOpen;
 
   return (
     /* Панель всегда в DOM, показ — CSS-переход. Так нет ни монтирования

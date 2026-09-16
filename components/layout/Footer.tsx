@@ -17,11 +17,11 @@ export function Footer() {
   const { openSettings } = useConsent();
 
   return (
-    <footer className="skip-offscreen relative overflow-hidden border-t border-graphite/10 bg-milk-deep pb-28 pt-14 lg:pb-14">
+    <footer className="skip-offscreen relative overflow-hidden border-t border-graphite/10 bg-milk-deep pb-24 pt-10 sm:pt-14 lg:pb-14">
       <StarrySwirl className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 text-graphite/[0.07]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.9fr_0.9fr]">
+        <div className="grid gap-6 sm:gap-10 lg:grid-cols-[1.2fr_0.9fr_0.9fr]">
           <div className="flex flex-col gap-4">
             <Logo />
             <p className="max-w-sm text-sm leading-relaxed text-ink-50">

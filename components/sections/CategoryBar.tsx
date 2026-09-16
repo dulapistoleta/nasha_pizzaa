@@ -84,7 +84,7 @@ export function CategoryBar({
           ref={railRef}
           role="tablist"
           aria-label="Категории меню"
-          className="rail-scroll fade-x relative flex flex-1 gap-2 overflow-x-auto scroll-smooth px-1 py-3"
+          className="rail-scroll fade-x relative flex flex-1 flex-nowrap gap-1.5 overflow-x-auto scroll-smooth px-1 py-2 sm:gap-2 sm:py-3"
         >
           {/* «Бегунок» активной категории */}
           <span
@@ -111,15 +111,15 @@ export function CategoryBar({
                 aria-selected={isActive}
                 title={category.hint}
                 onClick={() => onSelect(category.id)}
-                className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-bold transition-colors duration-200 ${
+                className={`relative shrink-0 rounded-full px-3 py-1.5 text-xs font-bold transition-colors duration-200 sm:px-4 sm:py-2.5 sm:text-sm ${
                   isActive ? "text-graphite" : "text-ink-50 hover:text-graphite"
                 }`}
               >
                 {!isActive ? (
                   <span className="absolute inset-0 rounded-full border border-graphite/[0.08] bg-cream/70" />
                 ) : null}
-                <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
-                  <span className="text-base leading-none">{category.emoji}</span>
+                <span className="relative z-10 flex items-center gap-1.5 whitespace-nowrap sm:gap-2">
+                  <span className="text-sm leading-none sm:text-base">{category.emoji}</span>
                   {category.label}
                 </span>
               </button>

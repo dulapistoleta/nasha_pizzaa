@@ -29,11 +29,11 @@ export function SectionHeading({
   const isCenter = align === "center";
 
   return (
-    <div className={`flex flex-col gap-3 ${isCenter ? "items-center text-center" : "items-start"}`}>
+    <div className={`flex flex-col gap-2.5 sm:gap-3 ${isCenter ? "items-center text-center" : "items-start"}`}>
       {eyebrow ? (
         <span
           data-reveal=""
-          className="reveal inline-flex items-center gap-2 rounded-full border border-graphite/10 bg-cream/80 px-3.5 py-1.5 font-marker text-lg text-tomato shadow-inset-line"
+          className="reveal inline-flex items-center gap-2 rounded-full border border-graphite/10 bg-cream/80 px-3 py-1 font-marker text-base text-tomato shadow-inset-line sm:px-3.5 sm:py-1.5 sm:text-lg"
         >
           {eyebrow}
         </span>
@@ -42,7 +42,7 @@ export function SectionHeading({
       <h2
         data-reveal=""
         style={{ "--reveal-delay": "60ms" } as CSSProperties}
-        className={`reveal max-w-3xl text-3xl font-black leading-[1.08] text-graphite sm:text-4xl lg:text-5xl ${
+        className={`reveal max-w-3xl text-2xl font-black leading-[1.12] text-graphite sm:text-4xl sm:leading-[1.08] lg:text-5xl ${
           isCenter ? "mx-auto" : ""
         }`}
       >
@@ -59,7 +59,7 @@ export function SectionHeading({
         <p
           data-reveal=""
           style={{ "--reveal-delay": "120ms" } as CSSProperties}
-          className={`reveal max-w-2xl text-base leading-relaxed text-ink-50 sm:text-lg ${
+          className={`reveal max-w-2xl text-sm leading-relaxed text-ink-50 sm:text-lg ${
             isCenter ? "mx-auto" : ""
           }`}
         >

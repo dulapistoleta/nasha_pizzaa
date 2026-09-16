@@ -17,7 +17,7 @@ export function TopPicks() {
   const hasCart = lines.length > 0;
 
   return (
-    <section id="top-picks" className="relative scroll-mt-40 py-14 sm:py-20">
+    <section id="top-picks" className="relative scroll-mt-40 py-8 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
@@ -27,8 +27,8 @@ export function TopPicks() {
           />
 
           <Reveal delay={0.15}>
-            <div className="flex items-center gap-3 rounded-3xl border border-graphite/10 bg-cream/85 p-4 shadow-inset-line backdrop-blur">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-sun text-graphite">
+            <div className="flex items-center gap-3 rounded-2xl border border-graphite/10 bg-cream/85 p-3 shadow-inset-line sm:rounded-3xl sm:p-4">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-sun text-graphite sm:h-11 sm:w-11 sm:rounded-2xl">
                 <Sparkles className="h-5 w-5" strokeWidth={2.6} />
               </span>
               <p className="max-w-[15rem] text-xs leading-snug text-ink-50">
@@ -38,7 +38,7 @@ export function TopPicks() {
           </Reveal>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mt-4 grid grid-cols-2 gap-2.5 sm:mt-10 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
           {TOP_PICKS.map((dish, index) => (
             <Reveal key={dish.id} delay={Math.min(index * 0.06, 0.42)} className="h-full">
               <DishCard dish={dish} priority={index < 2} />
