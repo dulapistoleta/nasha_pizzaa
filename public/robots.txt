@@ -1,0 +1,19 @@
+# «Наша пицца» — Астана, Мәңгілік Ел 52 блок В2
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Сканеры уязвимостей и SEO-парсеры, которые нам не нужны
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+Sitemap: /sitemap.xml
