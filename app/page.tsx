@@ -46,7 +46,9 @@ function StructuredData() {
         offers: { "@type": "Offer", price: dish.price, priceCurrency: "KZT" },
       })),
     },
-    makesOffer: DISHES.slice(0, 12).map((dish) => ({
+    /* В разметке первого экрана списка блюд больше нет (он появляется по
+       клику на категорию), поэтому полное меню отдаём поисковикам здесь. */
+    makesOffer: DISHES.map((dish) => ({
       "@type": "Offer",
       itemOffered: { "@type": "Product", name: dish.name },
       price: dish.price,

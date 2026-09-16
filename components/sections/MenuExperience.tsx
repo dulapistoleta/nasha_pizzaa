@@ -1,43 +1,31 @@
 "use client";
 
-import { useCallback, useDeferredValue, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useState } from "react";
 import { CategoryBar } from "@/components/sections/CategoryBar";
 import { MenuCatalog } from "@/components/sections/MenuCatalog";
 import { TopPicks } from "@/components/sections/TopPicks";
-import { useSectionSpy } from "@/hooks/useSectionSpy";
-import { CATEGORIES } from "@/lib/menu-data";
 import type { CategoryId } from "@/types/menu";
 
 const SCROLL_OFFSET = 96;
 
 /**
- * Оркестратор меню: хранит выбранную категорию, связывает sticky-ленту,
+ * Оркестратор меню: хранит выбранную категорию и связывает sticky-ленту,
  * блок «Топ выбор» и каталог.
  *
- *  • «Топ выбор» — сбрасывает фильтр и ведёт к блоку хитов;
- *  • конкретная категория — фильтрует каталог;
- *  • когда фильтра нет, активная плашка подсвечивается по позиции скролла.
+ *  • «Топ выбор» — стартовый экран: показываем только рекомендованные позиции;
+ *  • конкретная категория — подгружаем блюда этой категории в каталог;
+ *  • пока ничего не выбрано, каталог держит только плитки категорий — тяжёлого
+ *    списка из 25 карточек в разметке нет, поэтому первый экран лёгкий.
  */
 export function MenuExperience() {
   const [filter, setFilter] = useState<CategoryId>("top");
 
   /**
-   * Лента категорий подсвечивается мгновенно (неотложное обновление), а тяжёлый
-   * каталог перерисовывается отложенно: React может прервать эту работу, поэтому
-   * клик по плашке остаётся отзывчивым даже когда на странице 25 карточек,
-   * каждая на ~140 узлов DOM. Раньше всё это перестраивалось в одном кадре.
+   * Плашка в ленте подсвечивается мгновенно (неотложное обновление), а список
+   * блюд React перерисовывает отложенно и может прервать эту работу — клик
+   * остаётся отзывчивым даже на слабом телефоне.
    */
   const deferredFilter = useDeferredValue(filter);
-
-  const spyIds = useMemo(
-    () => CATEGORIES.filter((category) => category.id !== "top").map((c) => `cat-${c.id}`),
-    [],
-  );
-
-  const spy = useSectionSpy(spyIds, { enabled: filter === "top", offset: 260 });
-
-  /* Подсвечиваемая категория — производная от фильтра и позиции скролла. */
-  const spyCategory = spy ? (spy.replace("cat-", "") as CategoryId) : null;
 
   const scrollTo = useCallback((elementId: string, behavior: ScrollBehavior = "smooth") => {
     const element = document.getElementById(elementId);
@@ -82,16 +70,16 @@ export function MenuExperience() {
     [scrollTo],
   );
 
-  const handleReset = useCallback(() => setFilter("top"), []);
-
-  const activeCategory: CategoryId =
-    filter !== "top" ? filter : (spyCategory ?? "top");
+  const handleReset = useCallback(() => {
+    setFilter("top");
+    scrollTo("top-picks");
+  }, [scrollTo]);
 
   return (
     <>
-      <CategoryBar active={activeCategory} onSelect={handleSelect} />
+      <CategoryBar active={filter} onSelect={handleSelect} />
       <TopPicks />
-      <MenuCatalog filter={deferredFilter} onReset={handleReset} />
+      <MenuCatalog filter={deferredFilter} onSelect={handleSelect} onReset={handleReset} />
     </>
   );
 }

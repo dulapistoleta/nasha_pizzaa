@@ -3,7 +3,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CATEGORIES } from "@/lib/menu-data";
-import type { CategoryId } from "@/types/menu";
+import { prefetchCategoryImages } from "@/lib/prefetch-images";
+import type { CategoryId, DishCategory } from "@/types/menu";
 
 /**
  * Sticky-лента категорий с горизонтальной прокруткой (скроллбар + свайп),
@@ -111,6 +112,13 @@ export function CategoryBar({
                 aria-selected={isActive}
                 title={category.hint}
                 onClick={() => onSelect(category.id)}
+                /* Прогреваем фото, пока палец/курсор ещё только наводится. */
+                onPointerEnter={() =>
+                  category.id !== "top" && prefetchCategoryImages(category.id as DishCategory)
+                }
+                onFocus={() =>
+                  category.id !== "top" && prefetchCategoryImages(category.id as DishCategory)
+                }
                 className={`relative shrink-0 rounded-full px-3 py-1.5 text-xs font-bold transition-colors duration-200 sm:px-4 sm:py-2.5 sm:text-sm ${
                   isActive ? "text-graphite" : "text-ink-50 hover:text-graphite"
                 }`}

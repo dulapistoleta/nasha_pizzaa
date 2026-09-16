@@ -66,7 +66,7 @@ lib/
   format.ts                  цены в ₸, склонения, статус «Открыто/Закрыто»
   art-geometry.ts            детерминированная геометрия для SVG
 hooks/                       useLockBodyScroll, useOpenStatus,
-                             useSectionSpy, useMediaQuery
+                             useMediaQuery, useRevealObserver
 scripts/
   generate-dish-images.mjs   генератор webp-плейсхолдеров блюд
   visual-qa.mjs              скриншоты ключевых состояний интерфейса
@@ -182,6 +182,8 @@ for i in $(seq 1 130); do curl -s -o /dev/null http://localhost:3000/; done  # �
 - `backdrop-filter` и `mix-blend-mode` на мобильных не используются;
 - декоративные бесконечные анимации отключены на экранах до 768 px;
 - у фонового слоя `contain: strict` и отдельный слой компоновщика;
+- стартовый экран показывает только рекомендованные позиции, остальные
+  категории подгружаются по клику — в разметке первого экрана нет 25 карточек;
 - карточки каталога — под `memo`, фильтр применяется отложенно
   (`useDeferredValue`), ключ карточки — только `dish.id`: клик по категории
   остаётся отзывчивым, а DOM и `<img>` переиспользуются;
