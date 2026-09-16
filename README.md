@@ -53,14 +53,15 @@ components/
     MuralWall.tsx            большое панно со стеной Ван Гога и дровяной печью
     Logo.tsx                 знак и логотип
   layout/                    Header, MobileActionBar, Footer
-  sections/                  Hero, CategoryBar, TopPicks, MenuCatalog,
+  sections/                  Hero, CategoryBar, MenuCatalog (вид «Рекомендуем»
+                             внутри — TopPicks), MenuExperience,
                              MenuExperience, Atmosphere, Contacts
   menu/                      DishCard, DishImage, DishModal, контекст модалки
   cart/                      CartDrawer, CartButton
   ui/                        Badge, SectionHeading, Reveal
 lib/
   restaurant.ts              реальные данные заведения (адрес, телефоны, часы)
-  menu-data.ts               моковое меню: 25 позиций, 8 из них — «Топ выбор»
+  menu-data.ts               моковое меню: 25 позиций, 8 из них — «Рекомендуем»
   cart-store.tsx             корзина на Context + useReducer с localStorage
   whatsapp.ts                сборка текста и ссылки заказа
   format.ts                  цены в ₸, склонения, статус «Открыто/Закрыто»
@@ -182,8 +183,9 @@ for i in $(seq 1 130); do curl -s -o /dev/null http://localhost:3000/; done  # �
 - `backdrop-filter` и `mix-blend-mode` на мобильных не используются;
 - декоративные бесконечные анимации отключены на экранах до 768 px;
 - у фонового слоя `contain: strict` и отдельный слой компоновщика;
-- стартовый экран показывает только рекомендованные позиции, остальные
-  категории подгружаются по клику — в разметке первого экрана нет 25 карточек;
+- «Рекомендуем» — обычная категория, открытая по умолчанию; выбор другой
+  категории заменяет содержимое секции её блюдами. В разметке одновременно
+  живёт максимум 8–10 карточек вместо прежних 25;
 - карточки каталога — под `memo`, фильтр применяется отложенно
   (`useDeferredValue`), ключ карточки — только `dish.id`: клик по категории
   остаётся отзывчивым, а DOM и `<img>` переиспользуются;

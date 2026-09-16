@@ -116,10 +116,10 @@ export function Hero() {
               data-reveal="" className="reveal flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5"
              style={{ "--reveal-delay": "480ms" } as CSSProperties}>
               <a
-                href="#top-picks"
+                href="#menu-catalog"
                 className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-sun px-5 py-3 text-sm font-extrabold text-graphite shadow-sun transition hover:bg-sun-deep active:scale-[0.98] sm:px-6 sm:py-4"
               >
-                Смотреть топ-8
+                Смотреть рекомендованные
                 <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   strokeWidth={3}

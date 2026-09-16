@@ -48,7 +48,7 @@ export function Footer() {
               {CATEGORIES.map((category) => (
                 <li key={category.id}>
                   <a
-                    href={category.id === "top" ? "#top-picks" : "#menu-catalog"}
+                    href={category.id === "top" ? "#menu-catalog" : `#cat-${category.id}`}
                     className="inline-flex items-center gap-1.5 text-ink-50 transition hover:text-graphite"
                   >
                     <span>{category.emoji}</span>

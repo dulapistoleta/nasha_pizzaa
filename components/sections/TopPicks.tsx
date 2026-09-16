@@ -8,21 +8,27 @@ import { useCart } from "@/lib/cart-store";
 import { buildOrderLink } from "@/lib/whatsapp";
 
 /**
- * Блок «Топ выбор»: восемь позиций, которые заведение советует попробовать.
- * Превосходные степени вроде «самые продаваемые» не используем: их нужно
- * подтверждать выгрузкой продаж, иначе это недостоверная реклама.
+ * Вид «Рекомендуем» — стартовая категория меню: восемь позиций, которые
+ * заведение советует попробовать.
+ *
+ * Это не отдельная секция, а содержимое общей секции меню: пока выбрана
+ * категория «Рекомендуем», показываем этот набор, при выборе другой категории
+ * его заменяет список блюд. Превосходные степени вроде «самые продаваемые» не
+ * используем: их нужно подтверждать выгрузкой продаж, иначе это недостоверная
+ * реклама.
  */
 export function TopPicks() {
   const { lines } = useCart();
   const hasCart = lines.length > 0;
 
   return (
-    <section id="top-picks" className="relative scroll-mt-40 py-8 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+    /* id="top-picks" оставлен для старых ссылок и кнопки «Выбрать пиццу» */
+    <div id="top-picks" className="scroll-mt-40">
+      <div>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
             eyebrow="Восемь позиций, которые мы советуем"
-            title="Топ выбор"
+            title="Рекомендуем"
             description="Восемь позиций, ради которых к нам возвращаются: от «Пепперони» до сета на большую компанию."
           />
 
@@ -67,6 +73,6 @@ export function TopPicks() {
           </div>
         ) : null}
       </div>
-    </section>
+    </div>
   );
 }

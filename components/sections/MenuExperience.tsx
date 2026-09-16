@@ -1,21 +1,21 @@
 "use client";
 
-import { useCallback, useDeferredValue, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useState } from "react";
 import { CategoryBar } from "@/components/sections/CategoryBar";
 import { MenuCatalog } from "@/components/sections/MenuCatalog";
-import { TopPicks } from "@/components/sections/TopPicks";
+import { CATEGORIES } from "@/lib/menu-data";
 import type { CategoryId } from "@/types/menu";
 
 const SCROLL_OFFSET = 96;
 
 /**
- * Оркестратор меню: хранит выбранную категорию и связывает sticky-ленту,
- * блок «Топ выбор» и каталог.
+ * Оркестратор меню: хранит выбранную категорию и связывает sticky-ленту
+ * с содержимым секции меню.
  *
- *  • «Топ выбор» — стартовый экран: показываем только рекомендованные позиции;
- *  • конкретная категория — подгружаем блюда этой категории в каталог;
- *  • пока ничего не выбрано, каталог держит только плитки категорий — тяжёлого
- *    списка из 25 карточек в разметке нет, поэтому первый экран лёгкий.
+ *  • «Рекомендуем» — такая же категория, но открыта по умолчанию;
+ *  • выбор другой категории заменяет содержимое секции её блюдами;
+ *  • тяжёлого списка из 25 карточек в разметке нет — одновременно живёт
+ *    максимум 8–10, поэтому переключение и скролл дешёвые.
  */
 export function MenuExperience() {
   const [filter, setFilter] = useState<CategoryId>("top");
@@ -38,7 +38,7 @@ export function MenuExperience() {
     (id: CategoryId) => {
       if (id === "top") {
         setFilter("top");
-        scrollTo("top-picks");
+        scrollTo("menu-catalog");
         return;
       }
 
@@ -72,14 +72,43 @@ export function MenuExperience() {
 
   const handleReset = useCallback(() => {
     setFilter("top");
-    scrollTo("top-picks");
+    scrollTo("menu-catalog");
+  }, [scrollTo]);
+
+  /**
+   * Ссылки из шапки, подвала и hero — обычные анкоры. Чтобы они не просто
+   * прокручивали страницу, а ещё и переключали категорию, слушаем hash:
+   *  • #cat-<id> — открыть категорию;
+   *  • #menu-catalog / #top-picks — вернуться к рекомендованным.
+   */
+  useEffect(() => {
+    const applyHash = () => {
+      const hash = window.location.hash;
+      if (!hash) return;
+
+      if (hash === "#menu-catalog" || hash === "#top-picks") {
+        setFilter("top");
+        return;
+      }
+
+      const match = /^#cat-(.+)$/.exec(hash);
+      if (!match) return;
+
+      const id = match[1] as CategoryId;
+      if (!CATEGORIES.some((category) => category.id === id)) return;
+      setFilter(id);
+      window.requestAnimationFrame(() => scrollTo("menu-catalog"));
+    };
+
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
   }, [scrollTo]);
 
   return (
     <>
       <CategoryBar active={filter} onSelect={handleSelect} />
-      <TopPicks />
-      <MenuCatalog filter={deferredFilter} onSelect={handleSelect} onReset={handleReset} />
+      <MenuCatalog filter={deferredFilter} onReset={handleReset} />
     </>
   );
 }

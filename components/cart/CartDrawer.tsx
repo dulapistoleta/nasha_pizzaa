@@ -312,7 +312,7 @@ function EmptyCart({ onClose }: { onClose: () => void }) {
       <div className="flex flex-col gap-1">
         <span className="font-display text-xl font-black text-graphite">Корзина пока пустая</span>
         <span className="max-w-[16rem] text-sm text-ink-50">
-          Добавьте пиццу из «Топ выбора» — и мы соберём заказ в WhatsApp за пару секунд.
+          Добавьте пиццу из рекомендованных — и мы соберём заказ в WhatsApp за пару секунд.
         </span>
       </div>
       <button

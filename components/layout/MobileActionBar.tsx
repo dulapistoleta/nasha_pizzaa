@@ -44,7 +44,7 @@ export function MobileActionBar() {
               <CartButton variant="bar" />
             ) : (
               <a
-                href="#top-picks"
+                href="#menu-catalog"
                 onClick={close}
                 className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-sun px-4 py-3.5 text-sm font-extrabold text-graphite shadow-sun transition active:scale-[0.98]"
               >
